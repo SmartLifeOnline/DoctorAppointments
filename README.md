@@ -1,6 +1,7 @@
 ## Installation und Ausführung
 - node.js installieren
 - composer global require "laravel/installer"
+- composer update 
 - npm install -g npm
 - npm install
 - .env Datei befüllen (Beispiel .env.example)
