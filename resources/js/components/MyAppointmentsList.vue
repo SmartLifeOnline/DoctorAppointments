@@ -4,7 +4,9 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>Von</th>
+                    <th>Bis</th>
+                    <th>Arzt</th>
                     <th>Spezialisierung</th>
                 </tr>
                 </thead>
@@ -13,6 +15,7 @@
                     <td>{{ appointment.start_time }}</td>
                     <td>{{ appointment.end_time }}</td>
                     <td>{{ appointment.doctor_name }}</td>
+                    <td>{{ appointment.specialization_name }}</td>
                 </tr>
                 </tbody>
             </table>
@@ -24,15 +27,28 @@
 import type { PropType } from 'vue'
 
 interface Appointment {
-    title: string
-    author: string
-    year: number
+    appointment_id: number
+    patient_email: string
+    vorname: string
+    nachname: string
+    start_time: string
+    end_time: string
+    doctor_name: string
+    specialization_name: string
 }
 
 export default {
     name: "MyAppointmentsList",
     props: {
-        appointments: Object as PropType<Appointment>,
+        doctorId: Number,
+    },
+    computed: {
+        appointments() {
+            return this.$store.getters.allItems;
+        },
+    },
+    mounted() {
+        this.$store.dispatch('fetchMyAppointments', this.doctorId);
     },
 }
 </script>

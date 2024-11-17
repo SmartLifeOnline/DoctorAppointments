@@ -61,7 +61,7 @@ class TimeSlot extends Model
         return $query->get();
     }
 
-    public static function getNewDateArray(int $doctorId)
+    public static function getNewAppointmentArray(int $doctorId)
     {
         $timeSlots = self::where('active', 1)->where('doctor_id', $doctorId)->where('is_available', 1)->with('appointment')->get();
 

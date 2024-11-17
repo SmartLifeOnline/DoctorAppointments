@@ -9,12 +9,7 @@ use Illuminate\Support\Facades\Session;
 
 class DoctorsController extends Controller
 {
-    /**
-     * Show the all doctors
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
+    /*public function index()
     {
         $doctors = Doctor::getDoctorsListArray();
 
@@ -24,5 +19,15 @@ class DoctorsController extends Controller
         $appointment_successfully_requested = ($appointment_id_successfully_requested) ? Appointment::findActive($appointment_id_successfully_requested) : null;
 
         return view('doctors.index', compact('doctors', 'appointment_successfully_requested'));
+    }*/
+
+    public function index()
+    {
+        return view('index');
+    }
+
+    public function getDoctors()
+    {
+        return Doctor::getDoctorsListArray();
     }
 }

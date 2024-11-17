@@ -21,9 +21,24 @@ class AppointmentsController extends Controller
 
     public function create(int $doctorId)
     {
-        $timeSlots = TimeSlot::getNewDateArray($doctorId);
+        $timeSlots = TimeSlot::getNewAppointmentArray($doctorId);
 
         return view('appointments.create', compact('doctorId', 'timeSlots'));
+    }
+
+    public function getTimeSlots(int $doctorId)
+    {
+        return TimeSlot::getNewAppointmentArray($doctorId);
+    }
+
+    public function getMyAppointments(int $doctorId)
+    {
+        return Appointment::getMyAppointmentsArray($doctorId);
+    }
+
+    public function newTimeSlots(int $doctorId,  Request $request)
+    {
+        return self::store($doctorId, $request);
     }
 
     public function store(int $doctorId, Request $request)
@@ -75,7 +90,7 @@ class AppointmentsController extends Controller
 
         $timeSlot->update();
 
-        Session::put('appointment_id_successfully_requested', 1);
+        //Session::put('appointment_id_successfully_requested', 1);
 
         return response()->json($appointment);
     }
@@ -83,7 +98,7 @@ class AppointmentsController extends Controller
     public function edit(int $doctorId, int $appointmentId)
     {
         $appointment = Appointment::getActive();
-        $timeSlots = TimeSlot::getNewDateArray($doctorId);
+        $timeSlots = TimeSlot::getNewAppointmentArray($doctorId);
 
         return view('appointments.create', compact('doctorId', 'appointment', 'timeSlots'));
     }

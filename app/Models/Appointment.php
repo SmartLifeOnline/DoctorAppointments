@@ -67,6 +67,29 @@ class Appointment extends Model
         return $timeSlotsArray;
     }
 
+    public static function getMyAppointmentsArray(int $doctorId)
+    {
+        $appointments = self::where('active', 1)->where('doctor_id', $doctorId)->with(['doctor', 'timeSlot'])->get();
+
+        $appointmentsArray = [];
+
+        foreach($appointments as $appointment)
+        {
+            $appointmentsArray[] = [
+                'appointment_id' => $appointment->id,
+                'patient_email' => $appointment->patient_email,
+                'vorname' => $appointment->vorname,
+                'nachname' => $appointment->nachname,
+                'start_time' => $appointment->timeSlot->start_time->format('d.m.Y H:i'),
+                'end_time' => $appointment->timeSlot->end_time->format('d.m.Y H:i'),
+                'doctor_name' => $appointment->doctor->name,
+                'specialization_name' => $appointment->doctor->specialization->name,
+            ];
+        }
+
+        return $appointmentsArray;
+    }
+
     public function doctor()
     {
         return $this->hasOne('App\Models\Doctor', 'id', 'doctor_id')->where('active', 1);
